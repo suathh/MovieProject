@@ -55,7 +55,7 @@ public class MovieController {
         catch(Exception ex){
             return "Movie not found";
         }
-        return "The movie id is: "+movieId;
+        return movieId;
     }
 
     /*@RequestMapping("/movies/get-by-id")

@@ -4,28 +4,44 @@ import com.example.models.Likes;
 import com.example.models.LikesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by suat on 12.03.2016.
  */
+@CrossOrigin(origins = "http://localhost:63342", maxAge = 36000)
 @Controller
 public class LikeController {
+
     @RequestMapping("/likes/add")
     @ResponseBody
-    public String create(String type,String value,String movieId,String userId){
-        String userid="";
+    private String addLikes(String type,String value,String movieId,String userId){
+        Likes like;
         try{
-            Likes like = new Likes(type,value,movieId,userId);
+            like = new Likes(type,value,movieId,userId);
             likesDao.save(like);
-            userid = String.valueOf(like.getId());
         }
         catch(Exception ex){
-            return "Like didn't count because of : "+ex.toString();
+            return "Hata eklenemedi."+ex.toString();
         }
-        return "Your like collected succesfully !";
+        return "Başarı ile eklendi";
     }
+    @RequestMapping("/likes/get-likes")
+    @ResponseBody
+    private String getLikes(String movieId){
+       String likes="";
+        try{
+            likes = likesDao.findByMovieId(movieId);
+        }
+        catch(Exception ex){
+            return "Hata eklenemedi."+ex.toString();
+        }
+        return likes;
+    }
+
+
     @Autowired
     private LikesDao likesDao;
 }

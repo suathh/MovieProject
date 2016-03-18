@@ -33,14 +33,14 @@
      </thead>
         <tbody>
         <tr ng-repeat="x in movieList">
-            <td ng-click="editData.movie = x;store()"><a href="moviePage.html">{{x.name}}</a>
-                <button type="button" ng-click="like()" class="btn btn-default btn-sm btn pull-right">
+            <td ng-click="store(x)" ><a href="moviePage.html">{{x.name}}</a>
+                <button type="button" ng-click="dislike(x)" class="btn btn-default btn-sm btn pull-right">
                     <span class="glyphicon glyphicon-thumbs-down"></span> Dislike
                 </button>
-                <button type="button" ng-click="dislike()" class="btn btn-default btn-sm btn pull-right">
+                <button type="button" ng-click="like(x)" class="btn btn-default btn-sm btn pull-right">
                     <span class="glyphicon glyphicon-thumbs-up"></span> Like
                 </button>
-                <span class="badge pull-right">5</span></a><br>
+                <span ng-init="getLike(x)" class="badge pull-right">{{likes}}1</span></a><br>
             </td>
             <td>{{x.type}}</td>
             <td>{{x.year}}</td>
