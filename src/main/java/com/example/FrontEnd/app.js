@@ -1,11 +1,40 @@
 /**
  * Created by suat on 12.03.2016.
  */
-var myApp=angular.module('myApp',[]);
+var myApp=angular.module('myApp',['ngRoute']);
+
+myApp.config(function($routeProvider){
+
+    $routeProvider
+
+
+        .when('/', {
+            templateUrl : 'asd/index.html',
+            controller  : 'generalController'
+        })
+
+
+        .when('/filmEkle', {
+            templateUrl : 'filmEkle.html',
+            controller  : 'generalController'
+        })
+
+
+        .when('/filmListele', {
+            templateUrl : 'filmListele.html',
+            controller  : 'generalController'
+        })
+
+        .when('/moviePage', {
+            templateUrl : 'moviePage.html',
+            controller  : 'generalController'
+        });
+
+});
 
 //filmEkle sayfası controller'ı
 //todo Dynamic url for angular
-myApp.controller('addMovieController',function($scope,$http,$log){
+myApp.controller('generalController',function($scope,$http,$log){
     $scope.filmEkle=function(){
         $http({
             method: 'GET',
@@ -17,9 +46,7 @@ myApp.controller('addMovieController',function($scope,$http,$log){
            console.log(response);
         });
     }
-})
 //filmListele sayfası controller'ı
-myApp.controller('listMoviesController',function($scope,$http,$log){
 
     $scope.listMovies=function(){
         $http({
@@ -85,7 +112,6 @@ myApp.controller('listMoviesController',function($scope,$http,$log){
         $http({
             method: 'GET',
             header:'Access-Control-Allow-Origin: *',
-            ContentType:'application/text',
             url: 'http://localhost:8080/movies/get-by-name?name='+$scope.mName+''
         }).then(function successCallback(response) {
             $scope.mId=response.data;
@@ -103,28 +129,29 @@ myApp.controller('listMoviesController',function($scope,$http,$log){
             console.log(response);
         });
     }
+    $scope.likes=[];
     $scope.getLike=function(value){
-        var name = value.name;
-        console.log(name);
-        $scope.mName=name.replace(" ","%20");
+//todo like'tan sonra auto-refresh eklenecek
+        /* var name = value.name;
+        $scope.mName=name.replace(/ /g,"%20");
+        console.log($scope.mName);
+       $http({
+            method: 'GET',
+            header:'Access-Control-Allow-Origin: *',
+            url: 'http://localhost:8080/movies/get-by-name?name='+$scope.mName+''
+        }).then(function successCallback(response) {
+            $scope.movieId=response.data;
+
+        }, function errorCallback(response) {
+            console.log(response);
+        });*/
         $http({
             method: 'GET',
             header:'Access-Control-Allow-Origin: *',
-            ContentType:'application/text',
-            url: 'http://localhost:8080/movies/get-by-name?name='+$scope.mName+''
+            url: 'http://localhost:8080/movies/get-likes?movieId='+value+''
         }).then(function successCallback(response) {
-            $scope.mId=response.data;
-            console.log(response.data);
-            $http({
-                method: 'GET',
-                header:'Access-Control-Allow-Origin: *',
-                url: 'http://localhost:8080/likes/get-likes/movieId='+$scope.mId+''
-            }).then(function successCallback(response) {
-                //console.log("Your like successfuly saved.")
-                $scope.likes=response;
-            }, function errorCallback(response) {
-                console.log(response);
-            });
+            $scope.likes[value]=response.data;
+            console.log($scope.likes);
         }, function errorCallback(response) {
             console.log(response);
         });

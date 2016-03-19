@@ -18,7 +18,7 @@
     <title>Filmler</title>
 
 </head>
-<body ng-app="myApp" ng-controller="listMoviesController">
+<body ng-app="myApp" ng-controller="generalController">
 <form ng-submit="listMovies()">
 <div class="form-group">
     <button type="submit" class="btn btn-success">Submit</button>
@@ -40,7 +40,7 @@
                 <button type="button" ng-click="like(x)" class="btn btn-default btn-sm btn pull-right">
                     <span class="glyphicon glyphicon-thumbs-up"></span> Like
                 </button>
-                <span ng-init="getLike(x)" class="badge pull-right">{{likes}}1</span></a><br>
+                <span ng-init="getLike(x.id)" class="badge pull-right">{{likes[x.id]}}</span></a><br>
             </td>
             <td>{{x.type}}</td>
             <td>{{x.year}}</td>
@@ -50,6 +50,6 @@
     </table>
 </div>
 </form>
-{{editData.movie}}
+{{likes}}
 </body>
 </html>

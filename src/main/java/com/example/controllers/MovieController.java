@@ -129,6 +129,18 @@ public class MovieController {
         }
         return "Movie succesfully updated";
     }
+    @RequestMapping("/movies/get-likes")
+    @ResponseBody
+    private String getLikes(String movieId){
+        String likes="";
+        try{
+            likes = likesDao.findByMovieId(movieId);
+        }
+        catch(Exception ex){
+            return "Hata eklenemedi."+ex.toString();
+        }
+        return likes;
+    }
     @Autowired
     private MoviesDao moviesDao;
     @Autowired
