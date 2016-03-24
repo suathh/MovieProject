@@ -57,6 +57,18 @@ public class MovieController {
         }
         return movieId;
     }
+    @RequestMapping("/movies/get-by-id")
+    @ResponseBody
+    public Movies getById(Long id){
+        Movies movie;
+        try{
+            movie = moviesDao.findById(id);
+        }
+        catch(Exception ex){
+            return null;
+        }
+        return movie;
+    }
 
     /*@RequestMapping("/movies/get-by-id")
     @ResponseBody
@@ -123,6 +135,7 @@ public class MovieController {
             movie.setName(name);
             movie.setType(type);
             movie.setYear(year);
+            moviesDao.save(movie);
         }
         catch(Exception ex){
             return "Error updating the movie: "+ex.toString();
@@ -141,6 +154,33 @@ public class MovieController {
         }
         return likes;
     }
+    @RequestMapping("/movies/get-comments")
+    @ResponseBody
+    private String getComments(String movieId){
+        String likes="";
+        try{
+            likes = likesDao.findByMovieId(movieId);
+        }
+        catch(Exception ex){
+            return "Hata eklenemedi."+ex.toString();
+        }
+        return likes;
+    }
+    @RequestMapping("/movies/get10")
+    @ResponseBody
+    private Iterable getTop(){
+        Iterable<Movies> movie;
+        try{
+            movie = moviesDao.getTopTen();
+
+        }
+        catch(Exception ex){
+            return null;
+        }
+        return movie;
+    }
+
+
     @Autowired
     private MoviesDao moviesDao;
     @Autowired

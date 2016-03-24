@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html ng-app="myApp" lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
 <script src="app.js"></script>
@@ -13,16 +13,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <head>
     <meta charset="UTF-8">
-    <title>FilmEkle</title>
+    <title>Anasayfa</title>
 </head>
-<body ng-app="myApp" ng-controller="generalController">
-<form role="form" ng-submit="filmEkle()" novalidate>
-<div class="form-group" style="width:50%;align-content: center">
-    <input type="text" class="form-control" placeholder="Movie Name" ng-model="name">
-    <input type="text" class="form-control" placeholder="Movie Type" ng-model="type">
-    <input type="text" class="form-control" placeholder="Movie Year" ng-model="year">
-    <button type="submit" class="btn btn-success">Ekle</button>
+<body ng-controller="generalController" >
+<div class="form-group text-center" data-ng-init="topTen()">
+    <h2>TOP 10 Movies</h2>
+    <ul class="list-group">
+        <li ng-repeat="y in topMovies" class="list-group-item">{{y.name}}</li>
+    </ul>
 </div>
-    </form>
+
 </body>
 </html>

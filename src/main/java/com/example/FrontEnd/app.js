@@ -8,11 +8,15 @@ myApp.config(function($routeProvider){
     $routeProvider
 
 
-        .when('/', {
+        .when('/iptal', {
             templateUrl : 'asd/index.html',
             controller  : 'generalController'
         })
 
+        .when('/home', {
+            templateUrl : 'home.html',
+            controller  : 'generalController'
+        })
 
         .when('/filmEkle', {
             templateUrl : 'filmEkle.html',
@@ -47,14 +51,15 @@ myApp.controller('generalController',function($scope,$http,$log){
         });
     }
 //filmListele sayfası controller'ı
-
+    $scope.visible=false;
     $scope.listMovies=function(){
         $http({
             method: 'GET',
             header:'Access-Control-Allow-Origin: *',
             url: 'http://localhost:8080/movies/getAll'
         }).then(function successCallback(response) {
-            $scope.movieList=response.data
+            $scope.movieList=response.data;
+            $scope.visible=true;
         }, function errorCallback(response) {
             console.log(response);
         });
@@ -63,18 +68,73 @@ myApp.controller('generalController',function($scope,$http,$log){
     //moviePage sayfasına yönlendirirken satırdan film bilgilerini aktarıyor
     $scope.editData = {};
     $scope.store=function(data){
-
+            localStorage.setItem("movieId",data.id);
             localStorage.setItem("movieName", data.name);
             localStorage.setItem("movieType", data.type);
             localStorage.setItem("movieYear", data.year);
             console.log("Depolandı");
 
     }
+    $scope.editButton=true;
+    $scope.saveButton=false;
     $scope.getMovie=function(){
         console.log("Yüklendi");
+        $scope.movieId=localStorage.getItem("movieId");
         $scope.name=localStorage.getItem("movieName");
         $scope.mType=localStorage.getItem("movieType");
         $scope.mYear=localStorage.getItem("movieYear");
+    }
+    $scope.edit=function(){
+        $scope.editButton=false;
+        $scope.saveButton=true;
+    }
+    $scope.save=function(){
+        $scope.editButton=true;
+        $scope.saveButton=false;
+        var name=$scope.name.replace(" ","%20");
+        $http({
+            method: 'GET',
+            header:'Access-Control-Allow-Origin: *',
+            url: 'http://localhost:8080/movies/update?id='+$scope.movieId+'&name='+name+'&type='+$scope.mType+'&year='+$scope.mYear
+        }).then(function successCallback(response) {
+            alert("Film başarıyla güncellendi");
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    }
+    $scope.delete=function(){
+        $http({
+            method: 'GET',
+            header:'Access-Control-Allow-Origin',
+            url: 'http://localhost:8080/movies/delete?id='+$scope.movieId
+        }).then(function successCallback(response) {
+            alert("Film başarı ile silindi");
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    }
+    $scope.topTen=function(){
+        $http({
+            method: 'GET',
+            header:'Access-Control-Allow-Origin: *',
+            url: 'http://localhost:8080/movies/get10'
+        }).then(function successCallback(response) {
+            $scope.topMovies=response.data;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    }
+    $scope.getMovieWithId=function(value){
+        console.log(value);
+        $http({
+            method: 'GET',
+            header:'Access-Control-Allow-Origin: *',
+            url: 'http://localhost:8080/movies/get-by-id?id='+value
+        }).then(function successCallback(response) {
+            $scope.movieInfo=response.data;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
     }
 
     $scope.like=function(value){
@@ -104,7 +164,7 @@ myApp.controller('generalController',function($scope,$http,$log){
         });
 
     }
-
+//ilk http'e gerek yok üsttekide aynı , alttaki gibi yapılacak
     $scope.dislike=function(value){
         var name = value.name;
 

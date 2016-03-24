@@ -18,12 +18,28 @@
     <meta charset="UTF-8">
     <title>Film Görüntüleme</title>
 </head>
-<body  ng-controller="generalController" data-ng-init="getMovie()">
-<div class="form-group" >
-
+<body  ng-controller="generalController">
+<div class="form-group" data-ng-init="getMovie()">
+    <div ng-show="editButton" class="form-group">
     <h1>{{name}}</h1>
     <h2>{{mType}}</h2>
     <h3>{{mYear}}</h3>
+    </div>
+    <div ng-show="saveButton">
+        <input type="text" class="form-control" ng-model="name"/>
+        <input type="text" class="form-control" ng-model="mType"/>
+        <input type="text" class="form-control" ng-model="mYear"/>
+    </div>
+    <button ng-show="saveButton" type="button" ng-click="save(x)" class="btn btn-danger btn-sm btn">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Save
+    </button>
+    <button ng-show="editButton" type="button" ng-click="edit(x)" class="btn btn-success btn-sm btn">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+    </button>
+    <button type="button" ng-click="delete()" class="btn btn-warning btn-sm btn">
+        <span class="	glyphicon glyphicon-trash"></span> Delete
+    </button>
+
 </div>
 </body>
 </html>
