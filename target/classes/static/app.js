@@ -136,7 +136,6 @@ myApp.controller('generalController',function($scope,$http,$log){
             console.log(response);
         });
     }
-
     $scope.like=function(value){
         var name = value.name;
     //todo kullanıcı kontrolü eklendikten sonra her kullanıcınını sadece bir kez like'laması sağlanacak.
@@ -162,6 +161,9 @@ myApp.controller('generalController',function($scope,$http,$log){
         }, function errorCallback(response) {
             console.log(response);
         });
+
+    }
+    $scope.login=function(){
 
     }
 //ilk http'e gerek yok üsttekide aynı , alttaki gibi yapılacak

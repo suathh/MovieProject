@@ -26,7 +26,7 @@ public class LikeController {
         catch(Exception ex){
             return "Hata eklenemedi."+ex.toString();
         }
-        return "Başarı ile eklendi";
+        return "redirect:/filmListele.html";
     }
     @RequestMapping("/likes/get-likes")
     @ResponseBody

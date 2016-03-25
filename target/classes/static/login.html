@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html ng-app="myApp" lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
 <script src="app.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <head>
     <meta charset="UTF-8">
-    <title>FilmEkle</title>
+    <title>Login</title>
 </head>
-<body ng-app="myApp" ng-controller="generalController">
-<form role="form" ng-submit="filmEkle()" novalidate>
-<div class="form-group" style="width:50%;margin-left: 25%;margin-right: 25%">
-    <input type="text" class="form-control" placeholder="Movie Name" ng-model="name">
-    <input type="text" class="form-control" placeholder="Movie Type" ng-model="type">
-    <input type="text" class="form-control" placeholder="Movie Year" ng-model="year">
-    <button type="submit" class="btn btn-success">Ekle</button>
+<body ng-controller="generalController" >
+<div class="form-group text-center" style="width:50%;margin-left: 25%;margin-right: 25%">
+   <form role="form" ng-submit="login()">
+       <img src="img/logo.png" class="img-responsive" alt="logo"/>
+       <input type="checkbox" checked data-toggle="toggle">
+    <input class="form-control" type="text" placeholder="E-Mail" ng-model="username">
+    <input class="form-control" type="password" placeholder="Password" ng-model="password">
+       <button type="submit" class="btn btn-info">Submit</button>
+   </form>
 </div>
-    </form>
+
 </body>
 </html>
